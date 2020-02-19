@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~normalize.scss";
+@import "./src/styles/variables.scss";
+
+html {
+  font-size: 62.5%;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 1.6rem;
+  font-family: sans-serif;
+  background: $background;
+  color: rgba($black, 0.8);
+}

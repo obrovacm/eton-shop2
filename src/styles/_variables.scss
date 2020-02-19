@@ -1,0 +1,42 @@
+$white: #fff;
+$black: #0e1111;
+
+$grey: #f5f5fa;
+$purple: #26047e;
+$pink: #c23390;
+$eton-blue: #80c3eb;
+
+$background: $grey;
+$accent1: $purple;
+$accent2: $pink;
+$logo-accent: $eton-blue;
+
+$border-radius: 7px;
+
+$screen-padding-xs: 0 1em;
+$screen-padding-sm: 0 3em;
+$screen-padding-xlg: 0 calc((100vw - 1200px) / 2);
+
+// @mixin sm-screen {
+//   @media (min-width: 420px) {
+//     @content;
+//   }
+// }
+
+// @mixin md-screen {
+//   @media (min-width: 600px) {
+//     @content;
+//   }
+// }
+
+// @mixin lg-screen {
+//   @media (min-width: 850px) {
+//     @content;
+//   }
+// }
+
+// @mixin xlg-screen {
+//   @media (min-width: 1300px) {
+//     @content;
+//   }
+// }

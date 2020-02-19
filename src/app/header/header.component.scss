@@ -1,0 +1,68 @@
+@import "./src/styles/variables.scss";
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 70px;
+  background: linear-gradient(to right, $accent1, $accent2);
+  color: $white;
+}
+
+.nav-side {
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: $white;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  img {
+    height: 40px;
+  }
+  span {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding-left: 5px;
+  }
+  padding: 0 1em;
+}
+
+.nav-link {
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+  a {
+    padding: 0.5em 1em;
+  }
+}
+
+.cart {
+  opacity: 0.9;
+  a img {
+    width: 2.2em;
+  }
+}
+.active-cart {
+  opacity: 1;
+}
+
+.active {
+  opacity: 1;
+  a {
+    border-bottom: 3px solid $eton-blue;
+  }
+}
