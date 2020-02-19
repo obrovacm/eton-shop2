@@ -1,1 +1,13 @@
-<p>shop works!</p>
+<div class="shop-list">
+  <div class="shop-card" *ngFor="let item of shopItems">
+    <div class="shop-card__img">
+      <img [src]="item.image" [alt]="item.title" />
+    </div>
+    <div class="shop-card__title">{{ item.title }}</div>
+    <div class="shop-card__price">{{ item.price }}</div>
+    <div class="shop-card__description">{{ item.description }}</div>
+    <button class="shop-card__btn" (click)="addToCard(item)">
+      Add to Card
+    </button>
+  </div>
+</div>
