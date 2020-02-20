@@ -84,8 +84,8 @@ export class ShopItemsService implements OnInit {
     return this.get();
   }
 
-  addShopItem(item): Observable<ShopItem> {
-    this.shopItems = this.shopItems.slice().push(item);
+  addShopItem(item: ShopItem): Observable<ShopItem> {
+    this.shopItems.push(item);
     return this.post(item);
   }
 }
