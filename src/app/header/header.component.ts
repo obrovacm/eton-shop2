@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-import { Subscription } from "rxjs";
+// import { Subscription } from "rxjs";
+import { CartService } from "../cart/cart.service";
 
 @Component({
   selector: "app-header",
@@ -8,9 +9,9 @@ import { Subscription } from "rxjs";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  editModeSubscription: Subscription;
+  // editModeSubscription: Subscription;
   editMode = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -24,12 +25,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // console.log("event", this.editMode);
       // kako da ovo ne pozivam ovako cesto?
     });
+    this.cartService.cartChanged.subscribe();
   }
 
   // header ce morati da menja dostupnost cart dugmeta u
   // zavisno od sadrzaja + brojac
   // mogao bi i refresh za novi GET od servera
   ngOnDestroy() {
-    this.editModeSubscription.unsubscribe();
+    // this.editModeSubscription.unsubscribe();
   }
 }

@@ -18,7 +18,7 @@
   &__img {
     overflow: hidden;
     height: 45%;
-    img {
+    .img {
       //mora da se doradi
       min-height: 170px;
       width: 100%;
@@ -86,5 +86,20 @@
     position: absolute;
     top: 1em;
     right: 1em;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 200ms;
+
+    width: 2em;
+    height: 2em;
+    img {
+      position: absolute;
+      width: 100%;
+      filter: drop-shadow(1px 1px rgba(black, 0.5));
+    }
+    &:hover {
+      opacity: 1;
+    }
+    //spin it
   }
 }

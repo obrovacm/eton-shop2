@@ -1,15 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
-import { Observable, throwError, Subject } from "rxjs";
+import { Observable, throwError, Subscription } from "rxjs";
 import { ShopItem } from "./shop-item.model";
 
 @Injectable()
-export class ShopItemsService {
+export class ShopItemsService implements OnInit {
   // ovo mi treba da bih mogao odavde da saljem item-e na izmenu
   // u suprotnom bih morao da komplikujem i skarabudzim komunikaciju
   // izmedju 'manage-items' i 'shop' komponente bez servisa
-
+  shopItemsServiceChanged: Subscription;
+  shopItems: ShopItem[] = [];
   /*
    * base url
    */
@@ -21,6 +22,14 @@ export class ShopItemsService {
    */
   constructor(private http: HttpClient) {}
 
+  ngOnInit() {
+    // prebaciti INIT FETCH REQUEST & Subscription is 'shop.component'
+    // this.loading = true;
+    // this.get().subscribe((shopItems: ShopItem[]) => {
+    //   this.shopItems = shopItems;
+    //   this.loading = false;
+    // });
+  }
   /**
    * Get api request
    */
@@ -75,7 +84,8 @@ export class ShopItemsService {
     return this.get();
   }
 
-  addShopItem(data): Observable<ShopItem> {
-    return this.post(data);
+  addShopItem(item): Observable<ShopItem> {
+    this.shopItems = this.shopItems.slice().push(item);
+    return this.post(item);
   }
 }

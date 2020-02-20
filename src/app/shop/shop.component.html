@@ -1,10 +1,10 @@
 <div class="shop-list">
   <div class="shop-card" *ngFor="let item of shopItems">
     <div class="shop-card__img">
-      <img [src]="item.image" [alt]="item.title" />
-      <button class="shop-card__edit-btn" (click)="onEditItem(item)">
-        edit
-      </button>
+      <img [src]="item.image" class="img" [alt]="item.title" />
+      <div class="shop-card__edit-btn" (click)="onEditItem(item.id)">
+        <img src="assets/gear.svg" alt="gear" />
+      </div>
     </div>
     <div class="shop-card__info">
       <div class="shop-card__label">
