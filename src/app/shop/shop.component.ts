@@ -38,7 +38,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   onEditItem(item: ShopItem) {
-    this.router.navigate(["manage-items", item.id]);
+    this.router.navigate(["manage-items", "edit", item.id]);
   }
 
   ngOnDestroy() {

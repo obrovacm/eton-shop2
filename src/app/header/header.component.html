@@ -4,8 +4,10 @@
       <img src="eton-mini.png" alt="logo" />
       <span>EtonDigital</span>
     </a>
-    <li routerLinkActive="active" class="nav-link">
-      <a routerLink="/manage-items/new">New item</a>
+    <li routerLinkActive="active" class="nav-link" [class.edit-mode]="editMode">
+      <a routerLink="/manage-items">{{
+        editMode ? "Edit Item" : "New Item"
+      }}</a>
     </li>
   </div>
   <div class="nav-side">

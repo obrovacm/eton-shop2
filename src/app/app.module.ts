@@ -10,7 +10,8 @@ import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { ShopComponent } from "./shop/shop.component";
 import { CartComponent } from "./cart/cart.component";
-import { ManageItemsComponent } from "./manage-items/manage-items.component";
+import { ManageItemsBaseComponent } from "./manage-items-base/manage-items-base.component";
+import { ManageItemsComponent } from "./manage-items-base/manage-items/manage-items.component";
 import { NotFoundComponent } from "./shared/not-found.component";
 import { ShopItemsService } from "./shared/shop-items.service";
 import { LoadingAnimationComponent } from "./loading-animation/loading-animation.component";
@@ -24,7 +25,8 @@ import { LoadingAnimationComponent } from "./loading-animation/loading-animation
     CartComponent,
     ManageItemsComponent,
     NotFoundComponent,
-    LoadingAnimationComponent
+    LoadingAnimationComponent,
+    ManageItemsBaseComponent
   ],
   imports: [
     CommonModule,

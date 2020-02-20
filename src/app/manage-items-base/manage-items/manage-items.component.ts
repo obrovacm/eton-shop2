@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 
-import { ShopItemsService } from "../shared/shop-items.service";
-import { ShopItem } from "../shared/shop-item.model";
+import { ShopItemsService } from "../../shared/shop-items.service";
+import { ShopItem } from "../../shared/shop-item.model";
 
 @Component({
   selector: "app-manage-items",
@@ -9,12 +10,26 @@ import { ShopItem } from "../shared/shop-item.model";
   styleUrls: ["./manage-items.component.scss"]
 })
 export class ManageItemsComponent implements OnInit {
-  editMode: false; //should change nav-link ? "new item" : "edit item"
+  editMode = false; //should change nav-link ? "new item" : "edit item"
+  id: number;
 
-  constructor(private shopItemsService: ShopItemsService) {}
+  constructor(
+    private shopItemsService: ShopItemsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params["id"];
+      this.editMode = !!params["id"];
+      this.initForm();
+    });
+  }
 
+  initForm() {}
+
+  // for testing
   addBlankProduct() {
     this.shopItemsService
       .addShopItem(

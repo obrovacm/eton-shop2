@@ -66,3 +66,8 @@ nav {
     border-bottom: 3px solid $eton-blue;
   }
 }
+
+.edit-mode {
+  pointer-events: none;
+  user-select: none;
+}
