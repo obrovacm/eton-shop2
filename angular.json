@@ -22,9 +22,14 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
-            "assets": ["src/eton-mini.png", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "aot": true,
+            "assets": [
+              "src/eton-mini.png",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -40,7 +45,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -83,8 +87,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/eton-mini.png", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/eton-mini.png",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
@@ -96,7 +105,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
@@ -114,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "eton-shop2"
+  "defaultProject": "eton-shop2",
+  "cli": {
+    "analytics": "06cf1670-4780-41fb-a47a-d8dc9a1eadce"
+  }
 }

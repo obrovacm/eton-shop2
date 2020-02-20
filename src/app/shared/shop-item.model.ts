@@ -3,7 +3,7 @@ export class ShopItem {
   public price: number;
   public description: string;
   public image: string;
-  public id: number;
+  public id?: number;
   constructor(
     title: string,
     price: number,

@@ -1,5 +1,8 @@
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -9,7 +12,8 @@ import { ShopComponent } from "./shop/shop.component";
 import { CartComponent } from "./cart/cart.component";
 import { ManageItemsComponent } from "./manage-items/manage-items.component";
 import { NotFoundComponent } from "./shared/not-found.component";
-import { ShopCardComponent } from './shop/shop-card/shop-card.component';
+import { ShopItemsService } from "./shared/shop-items.service";
+import { LoadingAnimationComponent } from "./loading-animation/loading-animation.component";
 
 @NgModule({
   declarations: [
@@ -20,10 +24,16 @@ import { ShopCardComponent } from './shop/shop-card/shop-card.component';
     CartComponent,
     ManageItemsComponent,
     NotFoundComponent,
-    ShopCardComponent
+    LoadingAnimationComponent
   ],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  providers: [ShopItemsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

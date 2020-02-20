@@ -8,9 +8,20 @@ import { NotFoundComponent } from "./shared/not-found.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/shop", pathMatch: "full" },
-  { path: "shop", component: ShopComponent },
+  {
+    path: "shop",
+    component: ShopComponent
+  },
+  { path: "manage-items", redirectTo: "/manage-items/new", pathMatch: "full" },
+  {
+    path: "manage-items",
+    component: ManageItemsComponent,
+    children: [
+      { path: "new", component: ManageItemsComponent },
+      { path: "edit/:id", component: ManageItemsComponent }
+    ]
+  },
   { path: "cart", component: CartComponent },
-  { path: "manage-items", component: ManageItemsComponent },
   { path: "404", component: NotFoundComponent },
   { path: "**", redirectTo: "/404" }
 ];

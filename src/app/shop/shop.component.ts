@@ -1,31 +1,47 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 import { ShopItemsService } from "../shared/shop-items.service";
 import { ShopItem } from "../shared/shop-item.model";
+import { CartService } from "../cart/cart.service";
 
 @Component({
   selector: "app-shop",
   templateUrl: "./shop.component.html",
   styleUrls: ["./shop.component.scss"]
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
   serviceSubscription: Subscription;
   shopItems: ShopItem[];
 
-  constructor(private itemService: ShopItemsService) {}
+  loading = false;
+
+  constructor(
+    private cartService: CartService,
+    private shopItemsService: ShopItemsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.serviceSubscription = this.itemService.shopItemsChanged.subscribe(
-      (shopItems: ShopItem[]) => {
-        this.shopItems = this.shopItems;
-      }
-    );
-    this.shopItems = this.itemService.getItems();
-
-    console.log(this.itemService.getItems());
+    this.loading = true;
+    this.serviceSubscription = this.shopItemsService
+      .getShopItems()
+      .subscribe((shopItems: ShopItem[]) => {
+        this.shopItems = shopItems;
+        this.loading = false;
+      });
   }
-  addToCard(item: ShopItem) {
-    // add item to cart service
+
+  onAddToCard(item: ShopItem) {
+    this.cartService.addToCart(item);
+  }
+
+  onEditItem(item: ShopItem) {
+    this.router.navigate(["manage-items", item.id]);
+  }
+
+  ngOnDestroy() {
+    this.serviceSubscription.unsubscribe();
   }
 }
