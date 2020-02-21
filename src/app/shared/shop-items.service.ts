@@ -1,16 +1,16 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
-import { Observable, throwError, Subscription } from "rxjs";
+import { Observable, throwError, Subject } from "rxjs";
 import { ShopItem } from "./shop-item.model";
 
 @Injectable()
-export class ShopItemsService implements OnInit {
-  // ovo mi treba da bih mogao odavde da saljem item-e na izmenu
-  // u suprotnom bih morao da komplikujem i skarabudzim komunikaciju
-  // izmedju 'manage-items' i 'shop' komponente bez servisa
-  shopItemsServiceChanged: Subscription;
+export class ShopItemsService {
+  shopItemsServiceChanged = new Subject<ShopItem[]>();
   shopItems: ShopItem[] = [];
+  loadingServiceChanged = new Subject<boolean>();
+  loading = false;
+
   /*
    * base url
    */
@@ -22,14 +22,6 @@ export class ShopItemsService implements OnInit {
    */
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    // prebaciti INIT FETCH REQUEST & Subscription is 'shop.component'
-    // this.loading = true;
-    // this.get().subscribe((shopItems: ShopItem[]) => {
-    //   this.shopItems = shopItems;
-    //   this.loading = false;
-    // });
-  }
   /**
    * Get api request
    */
@@ -80,12 +72,63 @@ export class ShopItemsService implements OnInit {
 
   //////////////////////////////////////////////////////////////////
 
-  getShopItems(): Observable<ShopItem[]> {
-    return this.get();
+  getShopItemsFromServer() {
+    // this is called from 'shop-items-resolver.service.ts'
+    this.loading = true;
+    this.loadingServiceChanged.next(!!this.loading);
+    this.get().subscribe((shopItems: ShopItem[]) => {
+      this.shopItems = shopItems;
+      this.shopItemsServiceChanged.next(this.shopItems.slice());
+      this.loading = false;
+      this.loadingServiceChanged.next(!!this.loading);
+    });
+  }
+
+  getShopItems() {
+    return this.shopItems.slice();
   }
 
   addShopItem(item: ShopItem): Observable<ShopItem> {
     this.shopItems.push(item);
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
     return this.post(item);
+  }
+
+  updateItem(id: number, item: ShopItem) {
+    item.id = id;
+    let itemIndex;
+    this.shopItems.find((item, i) => {
+      itemIndex = i;
+      return item.id === id;
+    });
+    this.shopItems[itemIndex] = item;
+
+    //// this way doesn't preserve location in the array
+    // const arrWithoutItem = this.shopItems.filter(item => item.id !== id);
+    // item.id = id;
+    // console.log("arrWithoutItem:", arrWithoutItem);
+    // console.log("updatedItem", item);
+    // arrWithoutItem.push(item);
+    // const newShopItems = arrWithoutItem;
+    // this.shopItems = newShopItems;
+
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
+    return this.patch(item);
+  }
+
+  deleteShopItem(id: number) {
+    let itemIndex;
+    this.shopItems.find((item, i) => {
+      itemIndex = i;
+      return item.id === id;
+    });
+    this.shopItems.splice(itemIndex, 1);
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
+
+    // da li delete brise celu bazu?
+    // pa moram patch request
+    // ili saljem ceo niz - minus obrisan item?
+    //
+    // return this.put(item);
   }
 }

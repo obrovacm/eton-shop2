@@ -12,9 +12,9 @@ import { CartService } from "../cart/cart.service";
   styleUrls: ["./shop.component.scss"]
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  serviceSubscription: Subscription;
+  shopItemsSubscription: Subscription;
   shopItems: ShopItem[];
-
+  loadingSubscription: Subscription;
   loading = false;
 
   constructor(
@@ -24,13 +24,24 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.loading = true;
-    this.serviceSubscription = this.shopItemsService
-      .getShopItems()
-      .subscribe((shopItems: ShopItem[]) => {
+    // loading ne radi? zbog?
+    this.loadingSubscription = this.shopItemsService.loadingServiceChanged.subscribe(
+      loading => {
+        this.loading = loading;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    this.shopItemsSubscription = this.shopItemsService.shopItemsServiceChanged.subscribe(
+      (shopItems: ShopItem[]) => {
         this.shopItems = shopItems;
-        this.loading = false;
-      });
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    this.shopItems = this.shopItemsService.getShopItems();
   }
 
   onAddToCard(item: ShopItem) {
@@ -42,6 +53,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.serviceSubscription.unsubscribe();
+    this.shopItemsSubscription.unsubscribe();
   }
 }
