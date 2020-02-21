@@ -2,15 +2,36 @@
 @import "./src/styles/variables.scss";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-html {
-  // font-size: 62.5%;
-}
-* {
-  // box-sizing: border-box;
-}
 body {
-  // font-size: 1.6rem;
   font-family: sans-serif;
   background: $background;
   color: rgba($black, 0.8);
+}
+
+.my-btn {
+  display: inline-block;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 7px;
+  border: none;
+}
+
+.btn-pink {
+  background-color: $pink;
+  color: $white;
+  &:hover {
+    color: $white;
+    background-color: darken($pink, 5%);
+  }
+}
+.btn-purple {
+  background-color: $purple;
+  color: $white;
+  &:hover {
+    color: $white;
+    background-color: lighten($purple, 5%);
+  }
 }

@@ -10,6 +10,7 @@ import { CartService } from "../cart/cart.service";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // editModeSubscription: Subscription;
+  onCartPage = false;
   editMode = false;
   constructor(private router: Router, private cartService: CartService) {}
 
@@ -21,9 +22,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         } else if (this.editMode) {
           this.editMode = false;
         }
+        // console.log("event", this.editMode);
+        // kako da ovo ne pozivam ovako cesto?
+        if (event.url.includes("cart") && !this.onCartPage) {
+          this.onCartPage = true;
+        } else if (this.onCartPage) {
+          this.onCartPage = false;
+        }
       }
-      // console.log("event", this.editMode);
-      // kako da ovo ne pozivam ovako cesto?
     });
     this.cartService.cartChanged.subscribe();
   }

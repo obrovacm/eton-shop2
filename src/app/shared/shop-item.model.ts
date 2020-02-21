@@ -17,4 +17,3 @@ export class ShopItem {
     this.id = Math.random() * 10000000000000000;
   }
 }
-// id?

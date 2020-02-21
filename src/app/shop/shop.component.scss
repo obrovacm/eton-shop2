@@ -3,7 +3,20 @@
 .shop-list {
   display: grid;
   gap: 1em;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  max-width: 300px;
+  @include sm-screen {
+    grid-template-columns: 1fr 1fr;
+    max-width: 600px;
+  }
+  @include md-screen {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 900px;
+  }
+  @include lg-screen {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    max-width: 1200px;
+  }
 }
 
 .shop-card {

@@ -40,7 +40,7 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
       // this soon in component's life cycle
       setTimeout(() => {
         this.shopItemForm.setValue({ title, price, description, image });
-      }, 300);
+      }, 100);
     }
   }
 
