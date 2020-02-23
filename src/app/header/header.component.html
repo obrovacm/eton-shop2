@@ -14,7 +14,7 @@
     <li routerLinkActive="active" class="nav-link">
       <a routerLink="/shop">Shop</a>
     </li>
-    <li routerLinkActive="active-cart" class="nav-link cart" *ngIf="onCartPage">
+    <li routerLinkActive="active-cart" class="nav-link cart" *ngIf="!onCartPage">
       <a routerLink="/cart">
         <img src="assets/cart-b.svg" alt="cart" />
       </a>

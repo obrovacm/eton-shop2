@@ -12,21 +12,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // editModeSubscription: Subscription;
   onCartPage = false;
   editMode = false;
-  constructor(private router: Router, private cartService: CartService) {}
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes("edit") && !this.editMode) {
           this.editMode = true;
-        } else if (this.editMode) {
+        } else {
           this.editMode = false;
         }
         // console.log("event", this.editMode);
         // kako da ovo ne pozivam ovako cesto?
         if (event.url.includes("cart") && !this.onCartPage) {
           this.onCartPage = true;
-        } else if (this.onCartPage) {
+        } else {
           this.onCartPage = false;
         }
       }
