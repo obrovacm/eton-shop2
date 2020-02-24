@@ -1,13 +1,14 @@
-<nav>
+<nav #nav>
   <div class="nav-side">
     <a routerLink="/shop" class="logo">
       <img src="eton-mini.png" alt="logo" />
-      <span>EtonDigital</span>
+      <span class="small-screen">EtonDigital</span>
     </a>
     <li routerLinkActive="active" class="nav-link" [class.edit-mode]="editMode">
-      <a routerLink="/manage-items">{{
-        editMode ? "Edit Item" : "New Item"
-      }}</a>
+      <a routerLink="/manage-items">
+        {{ editMode ? "Edit" : "New" }}
+        <span class="small-screen">Item</span>
+      </a>
     </li>
   </div>
   <div class="nav-side">

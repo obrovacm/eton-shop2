@@ -54,7 +54,7 @@ nav {
 .cart {
   opacity: 1;
   position: relative;
-  font-size: 2em;
+  font-size: 1.8em;
   .cart-counter {
     position: absolute;
     font-size: 14px;
@@ -62,7 +62,7 @@ nav {
     width: 24px;
     height: 24px;
     top: -5px;
-    right: 20px;
+    right: 15px;
     opacity: 1;
     background: rgba($black, 0.8);
     border-radius: 50%;
@@ -87,4 +87,11 @@ nav {
 .edit-mode {
   pointer-events: none;
   user-select: none;
+}
+
+.small-screen {
+  display: none;
+  @include sm-screen {
+    display: inline;
+  }
 }
