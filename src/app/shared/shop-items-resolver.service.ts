@@ -19,11 +19,11 @@ export class ShopItemsResolverService implements Resolve<ShopItem[]> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
-    const shopItems = this.shopItemsService.getShopItems();
+    const shopItems: ShopItem[] = this.shopItemsService.getShopItems();
 
     // autopreloads only if there's no recipes
     if (shopItems.length === 0) {
-      return this.shopItemsService.getShopItemsFromServer();
+      return this.shopItemsService.getItemsFromServer();
     } else {
       return shopItems;
     }

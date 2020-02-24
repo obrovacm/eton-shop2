@@ -8,8 +8,6 @@ import { ShopItem } from "./shop-item.model";
 export class ShopItemsService {
   shopItemsServiceChanged = new Subject<ShopItem[]>();
   shopItems: ShopItem[] = [];
-  loadingServiceChanged = new Subject<boolean>();
-  loading = false;
 
   /*
    * base url
@@ -43,7 +41,7 @@ export class ShopItemsService {
    */
   private put<T>(data): Observable<T> {
     return this.http
-      .put<T>(this.baseUrl, data)
+      .put<T>(`${this.baseUrl}/${data.id}`, data)
       .pipe(catchError(this.handleError));
   }
 
@@ -59,8 +57,10 @@ export class ShopItemsService {
   /**
    * Delete api request
    */
-  private delete<T>(): Observable<T> {
-    return this.http.delete<T>(this.baseUrl).pipe(catchError(this.handleError));
+  private delete<T>(id: number): Observable<T> {
+    return this.http
+      .delete<T>(`${this.baseUrl}/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -72,63 +72,28 @@ export class ShopItemsService {
 
   //////////////////////////////////////////////////////////////////
 
-  getShopItemsFromServer() {
-    // this is called from 'shop-items-resolver.service.ts'
-    this.loading = true;
-    this.loadingServiceChanged.next(!!this.loading);
-    this.get().subscribe((shopItems: ShopItem[]) => {
-      this.shopItems = shopItems;
-      this.shopItemsServiceChanged.next(this.shopItems.slice());
-      this.loading = false;
-      this.loadingServiceChanged.next(!!this.loading);
-    });
+  setShopItems(shopItems: ShopItem[]) {
+    this.shopItems = shopItems;
   }
 
   getShopItems() {
     return this.shopItems.slice();
   }
 
+  getItemsFromServer() {
+    // this is called from 'shop-items-resolver.service.ts'
+    return this.get();
+  }
+
   addShopItem(item: ShopItem): Observable<ShopItem> {
-    this.shopItems.push(item);
-    this.shopItemsServiceChanged.next(this.shopItems.slice());
     return this.post(item);
   }
 
-  updateItem(id: number, item: ShopItem) {
-    item.id = id;
-    let itemIndex;
-    this.shopItems.find((item, i) => {
-      itemIndex = i;
-      return item.id === id;
-    });
-    this.shopItems[itemIndex] = item;
-
-    //// this way doesn't preserve location in the array
-    // const arrWithoutItem = this.shopItems.filter(item => item.id !== id);
-    // item.id = id;
-    // console.log("arrWithoutItem:", arrWithoutItem);
-    // console.log("updatedItem", item);
-    // arrWithoutItem.push(item);
-    // const newShopItems = arrWithoutItem;
-    // this.shopItems = newShopItems;
-
-    this.shopItemsServiceChanged.next(this.shopItems.slice());
-    return this.patch(item);
+  updateItem(item: ShopItem) {
+    return this.put(item);
   }
 
   deleteShopItem(id: number) {
-    let itemIndex;
-    this.shopItems.find((item, i) => {
-      itemIndex = i;
-      return item.id === id;
-    });
-    this.shopItems.splice(itemIndex, 1);
-    this.shopItemsServiceChanged.next(this.shopItems.slice());
-
-    // da li delete brise celu bazu?
-    // pa moram patch request
-    // ili saljem ceo niz - minus obrisan item?
-    //
-    // return this.put(item);
+    return this.delete(id);
   }
 }

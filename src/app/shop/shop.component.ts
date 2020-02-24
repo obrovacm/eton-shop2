@@ -29,21 +29,15 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // loading ne radi? zbog?
-    this.loadingSubscription = this.shopItemsService.loadingServiceChanged.subscribe(
-      loading => {
-        this.loading = loading;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.loading = true;
     this.shopItemsSubscription = this.shopItemsService.shopItemsServiceChanged.subscribe(
       (shopItems: ShopItem[]) => {
         this.shopItems = shopItems;
+        this.loading = false;
       },
       err => {
         console.log(err);
+        this.loading = false;
       }
     );
     this.shopItems = this.shopItemsService.getShopItems();

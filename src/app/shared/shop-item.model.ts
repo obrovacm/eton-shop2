@@ -14,6 +14,7 @@ export class ShopItem {
     this.price = price;
     this.description = description;
     this.image = image;
+    // id is useful here for new items that won't get
     this.id = Math.random() * 10000000000000000;
   }
 }
