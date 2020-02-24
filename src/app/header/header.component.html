@@ -14,9 +14,19 @@
     <li routerLinkActive="active" class="nav-link">
       <a routerLink="/shop">Shop</a>
     </li>
-    <li routerLinkActive="active-cart" class="nav-link cart" *ngIf="!onCartPage">
+    <li
+      routerLinkActive="active-cart"
+      class="nav-link cart"
+      [class.disabled]="cartCounter === 0 ? true : null"
+      *ngIf="!onCartPage"
+    >
       <a routerLink="/cart">
-        <img src="assets/cart-b.svg" alt="cart" />
+        <fa-icon [icon]="faShoppingCart"></fa-icon>
+        <div class="cart-counter" *ngIf="cartCounter > 0">
+          <span>
+            {{ cartCounter }}
+          </span>
+        </div>
       </a>
     </li>
   </div>

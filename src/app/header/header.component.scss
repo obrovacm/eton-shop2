@@ -52,13 +52,28 @@ nav {
 }
 
 .cart {
-  opacity: 0.9;
-  a img {
-    width: 2.2em;
+  position: relative;
+  font-size: 2em;
+  .cart-counter {
+    position: absolute;
+    font-size: 14px;
+    font-weight: 600;
+    width: 24px;
+    height: 24px;
+    top: -5px;
+    right: 20px;
+    opacity: 1;
+    background: rgba($black, 0.8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-}
-.active-cart {
-  opacity: 1;
+  &.disabled {
+    opacity: 0.8;
+    pointer-events: none;
+    cursor: none;
+  }
 }
 
 .active {

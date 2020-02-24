@@ -3,7 +3,7 @@
     <div class="shop-card__img">
       <img [src]="item.image" class="img" [alt]="item.title" />
       <div class="shop-card__edit-btn" (click)="onEditItem(item.id)">
-        <img src="assets/gear.svg" alt="gear" />
+        <fa-icon [icon]="faCog"></fa-icon>
       </div>
     </div>
     <div class="shop-card__info">
@@ -13,7 +13,10 @@
       </div>
       <div class="shop-card__description">{{ item.description }}</div>
       <button class="shop-card__btn" (click)="onAddToCard(item)">
-        <p>Add to Card</p>
+        <p>
+          Add to Card
+          <fa-icon [icon]="faCartPlus"></fa-icon>
+        </p>
       </button>
     </div>
   </div>

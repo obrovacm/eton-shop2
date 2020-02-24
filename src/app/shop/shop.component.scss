@@ -80,6 +80,9 @@
       margin: 0;
       font-weight: bold;
     }
+    .ng-fa-icon {
+      font-size: 1.2em;
+    }
 
     display: flex;
     flex-direction: row;
@@ -103,14 +106,14 @@
     right: 1em;
     cursor: pointer;
     opacity: 0.7;
-    transition: opacity 200ms;
+    transition: opacity 100ms;
 
     width: 2em;
     height: 2em;
-    img {
-      position: absolute;
-      width: 100%;
-      filter: drop-shadow(1px 1px rgba(black, 0.5));
+    .ng-fa-icon {
+      font-size: 2em;
+      color: $eton-blue;
+      filter: drop-shadow(1px 1px 1px $black);
     }
     &:hover {
       opacity: 1;

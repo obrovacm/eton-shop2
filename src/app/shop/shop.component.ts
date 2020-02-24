@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
+import { faCartPlus, faCog } from "@fortawesome/free-solid-svg-icons";
+
 import { ShopItemsService } from "../shared/shop-items.service";
 import { ShopItem } from "../shared/shop-item.model";
 import { CartService } from "../cart/cart.service";
@@ -12,6 +14,9 @@ import { CartService } from "../cart/cart.service";
   styleUrls: ["./shop.component.scss"]
 })
 export class ShopComponent implements OnInit, OnDestroy {
+  faCartPlus = faCartPlus;
+  faCog = faCog;
+
   shopItemsSubscription: Subscription;
   shopItems: ShopItem[];
   loadingSubscription: Subscription;

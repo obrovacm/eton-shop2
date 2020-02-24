@@ -46,4 +46,9 @@ export class CartService {
     this.cartItems.splice(i, 1);
     this.cartChanged.next(this.cartItems.slice());
   }
+
+  emptyCart() {
+    this.cartItems = [];
+    this.cartChanged.next(this.cartItems.slice());
+  }
 }

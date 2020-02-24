@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-// import { Subscription } from "rxjs";
+
 import { CartService } from "../cart/cart.service";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { CartItem } from "../cart/cart-item.model";
 
 @Component({
   selector: "app-header",
@@ -9,10 +11,12 @@ import { CartService } from "../cart/cart.service";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  // editModeSubscription: Subscription;
+  faShoppingCart = faShoppingCart;
+
   onCartPage = false;
   editMode = false;
-  constructor(private router: Router, private cartService: CartService) { }
+  cartCounter = 0;
+  constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -31,12 +35,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.cartService.cartChanged.subscribe();
+
+    this.cartService.cartChanged.subscribe(cartItems => {
+      this.cartCounter = cartItems.reduce(
+        (total, item: CartItem) => (total += item.counter),
+        0
+      );
+    });
   }
 
-  // header ce morati da menja dostupnost cart dugmeta u
-  // zavisno od sadrzaja + brojac
-  // mogao bi i refresh za novi GET od servera
   ngOnDestroy() {
     // this.editModeSubscription.unsubscribe();
   }

@@ -15,6 +15,7 @@ import { ManageItemsComponent } from "./manage-items-base/manage-items/manage-it
 import { NotFoundComponent } from "./shared/not-found.component";
 import { ShopItemsService } from "./shared/shop-items.service";
 import { LoadingAnimationComponent } from "./loading-animation/loading-animation.component";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LoadingAnimationComponent } from "./loading-animation/loading-animation
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [ShopItemsService],
   bootstrap: [AppComponent]
