@@ -8,6 +8,8 @@ import { ShopItem } from "./shop-item.model";
 export class ShopItemsService {
   shopItemsServiceChanged = new Subject<ShopItem[]>();
   private shopItems: ShopItem[] = [];
+  loadingChanged = new Subject<boolean>();
+  private loading = false;
 
   /*
    * base url
@@ -75,7 +77,20 @@ export class ShopItemsService {
   ////////////////////////////////////////////////////////////
   getItemsFromServer() {
     // this is called from 'shop-items-resolver.service.ts'
-    return this.get();
+    this.loadingOn();
+    let newShopItems;
+    this.get().subscribe((items: ShopItem[]) => {
+      newShopItems = items;
+      this.setShopItems(newShopItems);
+      this.loadingOff();
+    }, err => {
+      console.log(err);
+      this.loadingOff();
+
+    });
+    // sta radi ovo u rezolveru? zasto resolver ima return? 
+    // sta ce mu 'newShopItems'?
+    return newShopItems
   }
   addShopItemToServer(item: ShopItem): Observable<ShopItem> {
     return this.post(item);
@@ -93,6 +108,13 @@ export class ShopItemsService {
     return this.shopItems.slice();
   }
 
+  setShopItems(items: ShopItem[]) {
+    this.shopItems = items;
+    this.shopItemsServiceChanged.next(
+      this.shopItems.slice()
+    )
+  }
+
   addShopItem(item: ShopItem) {
     this.shopItems.push(item);
     this.shopItemsServiceChanged.next(
@@ -106,8 +128,6 @@ export class ShopItemsService {
       itemIndex = i;
       return item.id === shopItem.id;
     });
-
-    // console.log("edit item.id:", item.id);
     this.shopItems[itemIndex] = item;
     this.shopItemsServiceChanged.next(
       this.shopItems.slice()
@@ -125,4 +145,20 @@ export class ShopItemsService {
       this.shopItems.slice()
     );
   }
+  ////////////////////////////////////////////////////////////
+  // LOADING STATE
+  ////////////////////////////////////////////////////////////
+  getLoadingState() {
+    return this.loading;
+  }
+  loadingOn() {
+    this.loading = true;
+    this.loadingChanged.next(!!this.loading);
+  }
+  loadingOff() {
+    this.loading = false;
+    this.loadingChanged.next(!!this.loading);
+  }
+  // This way I can indicate background activity of service
+  // in any component (with a spinner or a color change)
 }

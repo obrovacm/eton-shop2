@@ -50,6 +50,7 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
     if (this.editMode) {
       // this works on existing objects on the fake server (JSON file)
       // but it will not work on newly created items
+      submittedItem.id = this.id
       this.shopItemsService
         .updateItemOnServer(submittedItem)
         .subscribe((responseItem: ShopItem) => {
@@ -76,7 +77,7 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
     this.shopItemsService
       .deleteShopItemOnServer(this.id)
       .subscribe((response: ShopItem) => {
-        console.log("http DELETE response:", response);
+        this.shopItemsService.deleteShopItem(this.id);
       },
         (errorResponse) => {
           console.log("This message could have been  caused by trying to delete an item that's not really ON the fake server...", errorResponse)

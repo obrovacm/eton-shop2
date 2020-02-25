@@ -26,21 +26,30 @@ export class ShopComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private shopItemsService: ShopItemsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.loading = true;
+    // Da li je stavljanje 'loading'-a u servis losa praksa i zasto?
+    this.loading = this.shopItemsService.getLoadingState();
+    this.loadingSubscription = this.shopItemsService.loadingChanged.subscribe(
+      (loadingState: boolean) => {
+        this.loading = loadingState;
+      }
+    )
+    // getting initial array and then subscribing to changes
+    this.shopItems = this.shopItemsService.getShopItems();
     this.shopItemsSubscription = this.shopItemsService.shopItemsServiceChanged.subscribe(
       (shopItems: ShopItem[]) => {
         this.shopItems = shopItems;
-        this.loading = false;
       },
       err => {
         console.log(err);
-        this.loading = false;
       }
     );
-    this.shopItems = this.shopItemsService.getShopItems();
+    // ngOnInit listens for changes in service 'shop-items-resolver.service.ts' 
+    // is checking if the shopItems array in service is emptyand if it is, it 
+    // sends GET HTTP request that changes service state, so our 
+    // 'this.shopItemsSubscription' is called and page content is updated
   }
 
   onAddToCard(item: ShopItem) {
@@ -53,5 +62,6 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.shopItemsSubscription.unsubscribe();
+    this.loadingSubscription.unsubscribe();
   }
 }
