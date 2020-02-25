@@ -96,12 +96,14 @@
       color: $eton-blue;
       display: block;
       filter: drop-shadow(0 0 1px black);
+      opacity: 0.8;
       transform-origin: center;
-      transition: transform 400ms ease-in-out;
+      transition: transform 400ms ease-in-out, opacity 400ms;
     }
     &:hover {
       .ng-fa-icon {
         transform: rotate(180deg);
+        opacity: 1;
       }
     }
   }
