@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { CartService } from "./cart.service";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
 import {
   faWindowClose,
@@ -7,8 +8,8 @@ import {
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
 
+import { CartService } from "./cart.service";
 import { CartItem } from "./cart-item.model";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-cart",
@@ -22,8 +23,13 @@ export class CartComponent implements OnInit, OnDestroy {
 
   cartSubscription: Subscription;
   cartItems: CartItem[] = [];
+  loading = false;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.cartSubscription = this.cartService.cartChanged.subscribe(
@@ -54,8 +60,13 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onBuy() {
-    this.router.navigate(["/shop"]);
-    this.cartService.emptyCart();
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.toastr.success("", "Successful shopping!");
+      this.cartService.emptyCart();
+      this.router.navigate(["/shop"]);
+    }, 2500);
   }
 
   ngOnDestroy() {

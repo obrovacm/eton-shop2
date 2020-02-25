@@ -4,6 +4,7 @@ import { NgForm } from "@angular/forms";
 
 import { ShopItemsService } from "../../shared/shop-items.service";
 import { ShopItem } from "../../shared/shop-item.model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-manage-items",
@@ -18,8 +19,9 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
   constructor(
     private shopItemsService: ShopItemsService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -50,39 +52,50 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
     if (this.editMode) {
       // this works on existing objects on the fake server (JSON file)
       // but it will not work on newly created items
-      submittedItem.id = this.id
-      this.shopItemsService
-        .updateItemOnServer(submittedItem)
-        .subscribe((responseItem: ShopItem) => {
+      submittedItem.id = this.id;
+      this.shopItemsService.updateItemOnServer(submittedItem).subscribe(
+        (responseItem: ShopItem) => {
           this.shopItemsService.editShopItem(responseItem);
+          this.toastr.success(`Item "${responseItem.title}" edited`);
         },
-          (errorResponse) => {
-            console.log("This message could have been caused by trying to edit an item that's not really ON the fake server...", errorResponse)
-          });
+        errorResponse => {
+          this.toastr.error(
+            "This message could have been caused by trying to edit an item that's not really ON the fake JSON server...",
+            "Item wasn't updated."
+          );
+        }
+      );
       //// WARNING: uncomment this in order to allow local action
       //// without the response from server!!!
       // this.shopItemsService.editShopItem(submittedItem);
     } else {
-      this.shopItemsService
-        .addShopItemToServer(submittedItem)
-        .subscribe((responseItem: ShopItem) => {
-          // console.log("new item.id:", responseItem.id);
+      this.shopItemsService.addShopItemToServer(submittedItem).subscribe(
+        (responseItem: ShopItem) => {
           this.shopItemsService.addShopItem(responseItem);
-        });
+          this.toastr.success(`Item "${responseItem.title}" added.`);
+        },
+        errorResponse => {
+          this.toastr.error(errorResponse, "Item wasn't added.");
+        }
+      );
     }
     this.router.navigate(["/shop"]);
   }
 
   onDelete() {
-    this.shopItemsService
-      .deleteShopItemOnServer(this.id)
-      .subscribe((response: ShopItem) => {
+    this.shopItemsService.deleteShopItemOnServer(this.id).subscribe(
+      (response: ShopItem) => {
         this.shopItemsService.deleteShopItem(this.id);
+        this.toastr.success(`Item with id:${this.id} deleted.`);
       },
-        (errorResponse) => {
-          console.log("This message could have been  caused by trying to delete an item that's not really ON the fake server...", errorResponse)
-        });
-    //// WARNING: uncomment this in order to allow local action 
+      errorResponse => {
+        this.toastr.error(
+          "This message could have been  caused by trying to delete an item that's not really ON the fake JSON server...",
+          "Item wasn't deleted."
+        );
+      }
+    );
+    //// WARNING: uncomment this in order to allow local action
     //// without the response from server!!!
     // this.shopItemsService.deleteShopItem(this.id);
 
@@ -108,6 +121,10 @@ export class ManageItemsComponent implements OnInit, AfterViewInit {
           responseItem.id
         );
         this.shopItemsService.addShopItem(responseItem);
+        this.toastr.success(
+          `Test item id:${responseItem.id}`,
+          "Dummy data added!"
+        );
       });
   }
 }

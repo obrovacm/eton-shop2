@@ -3,6 +3,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+import { ToastrModule } from "ngx-toastr";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -15,7 +18,7 @@ import { ManageItemsComponent } from "./manage-items-base/manage-items/manage-it
 import { NotFoundComponent } from "./shared/not-found.component";
 import { ShopItemsService } from "./shared/shop-items.service";
 import { LoadingAnimationComponent } from "./loading-animation/loading-animation.component";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -35,7 +38,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: "toast-bottom-left",
+      preventDuplicates: true
+    })
   ],
   providers: [ShopItemsService],
   bootstrap: [AppComponent]
