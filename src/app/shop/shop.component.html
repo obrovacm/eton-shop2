@@ -1,25 +1,5 @@
 <div class="shop-list mx-auto">
-  <div class="shop-card" *ngFor="let item of shopItems">
-    <div class="shop-card__img">
-      <img [src]="item.image" class="img" [alt]="item.title" />
-      <div class="shop-card__edit-btn" (click)="onEditItem(item.id)">
-        <fa-icon [icon]="faCog"></fa-icon>
-      </div>
-    </div>
-    <div class="shop-card__info">
-      <div class="shop-card__label">
-        <div class="shop-card__title">{{ item.title }}</div>
-        <div class="shop-card__price">{{ item.price }}$</div>
-      </div>
-      <div class="shop-card__description">{{ item.description }}</div>
-      <button class="shop-card__btn" (click)="onAddToCard(item)">
-        <p>
-          Add to Card
-          <fa-icon [icon]="faCartPlus"></fa-icon>
-        </p>
-      </button>
-    </div>
-  </div>
+  <app-shop-card *ngFor="let item of shopItems" [item]="item"></app-shop-card>
 </div>
 
 <app-loading-animation *ngIf="loading"> </app-loading-animation>

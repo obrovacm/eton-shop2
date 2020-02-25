@@ -1,0 +1,21 @@
+<div class="shop-card">
+  <div class="shop-card__img">
+    <img [src]="item.image" class="img" [alt]="item.title" />
+    <div class="shop-card__edit-btn" (click)="onEditItem()">
+      <fa-icon [icon]="faCog"></fa-icon>
+    </div>
+  </div>
+  <div class="shop-card__info">
+    <div class="shop-card__label">
+      <div class="shop-card__title">{{ item.title }}</div>
+      <div class="shop-card__price">{{ item.price }}$</div>
+    </div>
+    <div class="shop-card__description">{{ item.description }}</div>
+    <button class="shop-card__btn" (click)="onAddToCard()">
+      <p>
+        Add to Card
+        <fa-icon [icon]="faCartPlus"></fa-icon>
+      </p>
+    </button>
+  </div>
+</div>

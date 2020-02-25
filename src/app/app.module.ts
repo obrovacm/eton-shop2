@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { ToastrModule } from "ngx-toastr";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -18,7 +19,7 @@ import { ManageItemsComponent } from "./manage-items-base/manage-items/manage-it
 import { NotFoundComponent } from "./shared/not-found.component";
 import { ShopItemsService } from "./shared/shop-items.service";
 import { LoadingAnimationComponent } from "./loading-animation/loading-animation.component";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { ShopCardComponent } from "./shop/shop-card/shop-card.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     ManageItemsComponent,
     NotFoundComponent,
     LoadingAnimationComponent,
-    ManageItemsBaseComponent
+    ManageItemsBaseComponent,
+    ShopCardComponent
   ],
   imports: [
     CommonModule,
