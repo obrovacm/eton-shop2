@@ -13,7 +13,8 @@ export class CartService {
   constructor() {}
 
   addToCart(shopItem: ShopItem) {
-    console.log("start cart items:", this.cartItems);
+    // locating an item in order to create object of type 'cart item'
+    // which contains property 'counter'
     let cartItemIndex;
     let foundItem = this.cartItems.find((item, i) => {
       cartItemIndex = i;
@@ -21,6 +22,8 @@ export class CartService {
     });
     if (foundItem) {
       this.cartItems[cartItemIndex].counter++;
+      // counter is used so that there are no more than one
+      // card for a single kind of item in a cart (no matter the quantity)
     } else {
       const newCartItem = new CartItem(shopItem);
       this.cartItems.push(newCartItem);

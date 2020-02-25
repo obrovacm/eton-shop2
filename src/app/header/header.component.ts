@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 
 import { CartService } from "../cart/cart.service";
@@ -10,7 +10,7 @@ import { CartItem } from "../cart/cart-item.model";
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"]
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   faShoppingCart = faShoppingCart;
 
   onCartPage = false;
@@ -42,9 +42,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
         0
       );
     });
-  }
-
-  ngOnDestroy() {
-    // this.editModeSubscription.unsubscribe();
   }
 }

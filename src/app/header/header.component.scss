@@ -89,7 +89,7 @@ nav {
   user-select: none;
 }
 
-.small-screen {
+.small-screen-off {
   display: none;
   @include sm-screen {
     display: inline;
