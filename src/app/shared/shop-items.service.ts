@@ -7,7 +7,7 @@ import { ShopItem } from "./shop-item.model";
 @Injectable()
 export class ShopItemsService {
   shopItemsServiceChanged = new Subject<ShopItem[]>();
-  shopItems: ShopItem[] = [];
+  private shopItems: ShopItem[] = [];
 
   /*
    * base url
@@ -18,7 +18,7 @@ export class ShopItemsService {
   /**
    * Constructor
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Get api request
@@ -70,30 +70,59 @@ export class ShopItemsService {
     return throwError(error);
   };
 
-  //////////////////////////////////////////////////////////////////
-
-  setShopItems(shopItems: ShopItem[]) {
-    this.shopItems = shopItems;
-  }
-
-  getShopItems() {
-    return this.shopItems.slice();
-  }
-
+  ////////////////////////////////////////////////////////////
+  // SERVICING SERVER STATE aka HTTP REQUEST handles
+  ////////////////////////////////////////////////////////////
   getItemsFromServer() {
     // this is called from 'shop-items-resolver.service.ts'
     return this.get();
   }
-
-  addShopItem(item: ShopItem): Observable<ShopItem> {
+  addShopItemToServer(item: ShopItem): Observable<ShopItem> {
     return this.post(item);
   }
-
-  updateItem(item: ShopItem) {
+  updateItemOnServer(item: ShopItem) {
     return this.put(item);
+  }
+  deleteShopItemOnServer(id: number) {
+    return this.delete(id);
+  }
+  ////////////////////////////////////////////////////////////
+  // SERVICING LOCAL STATE
+  ////////////////////////////////////////////////////////////
+  getShopItems() {
+    return this.shopItems.slice();
+  }
+
+  addShopItem(item: ShopItem) {
+    this.shopItems.push(item);
+    this.shopItemsServiceChanged.next(
+      this.shopItems.slice()
+    )
+  }
+
+  editShopItem(item: ShopItem) {
+    let itemIndex;
+    this.shopItems.find((shopItem, i) => {
+      itemIndex = i;
+      return item.id === shopItem.id;
+    });
+
+    // console.log("edit item.id:", item.id);
+    this.shopItems[itemIndex] = item;
+    this.shopItemsServiceChanged.next(
+      this.shopItems.slice()
+    );
   }
 
   deleteShopItem(id: number) {
-    return this.delete(id);
+    let itemIndex;
+    this.shopItems.find((shopItem, i) => {
+      itemIndex = i;
+      return id === shopItem.id;
+    });
+    this.shopItems.splice(itemIndex, 1);
+    this.shopItemsServiceChanged.next(
+      this.shopItems.slice()
+    );
   }
 }
