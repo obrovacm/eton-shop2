@@ -13,7 +13,9 @@ const routes: Routes = [
   {
     path: "shop",
     component: ShopComponent,
-    resolve: [ShopItemsResolverService]
+    resolve: {
+      shopItems: ShopItemsResolverService
+    }
   },
   { path: "manage-items", redirectTo: "/manage-items/new", pathMatch: "full" },
   {

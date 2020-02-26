@@ -20,7 +20,7 @@ export class ShopItemsService {
   /**
    * Constructor
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get api request
@@ -79,18 +79,18 @@ export class ShopItemsService {
     // this is called from 'shop-items-resolver.service.ts'
     this.loadingOn();
     let newShopItems;
-    this.get().subscribe((items: ShopItem[]) => {
-      newShopItems = items;
-      this.setShopItems(newShopItems);
-      this.loadingOff();
-    }, err => {
-      console.log(err);
-      this.loadingOff();
-
-    });
-    // sta radi ovo u rezolveru? zasto resolver ima return? 
-    // sta ce mu 'newShopItems'?
-    return newShopItems
+    this.get().subscribe(
+      (items: ShopItem[]) => {
+        newShopItems = items;
+        this.setShopItems(newShopItems);
+        this.loadingOff();
+      },
+      err => {
+        console.log(err);
+        this.loadingOff();
+      }
+    );
+    return newShopItems;
   }
   addShopItemToServer(item: ShopItem): Observable<ShopItem> {
     return this.post(item);
@@ -110,16 +110,12 @@ export class ShopItemsService {
 
   setShopItems(items: ShopItem[]) {
     this.shopItems = items;
-    this.shopItemsServiceChanged.next(
-      this.shopItems.slice()
-    )
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
   }
 
   addShopItem(item: ShopItem) {
     this.shopItems.push(item);
-    this.shopItemsServiceChanged.next(
-      this.shopItems.slice()
-    )
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
   }
 
   editShopItem(item: ShopItem) {
@@ -129,9 +125,7 @@ export class ShopItemsService {
       return item.id === shopItem.id;
     });
     this.shopItems[itemIndex] = item;
-    this.shopItemsServiceChanged.next(
-      this.shopItems.slice()
-    );
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
   }
 
   deleteShopItem(id: number) {
@@ -141,9 +135,7 @@ export class ShopItemsService {
       return id === shopItem.id;
     });
     this.shopItems.splice(itemIndex, 1);
-    this.shopItemsServiceChanged.next(
-      this.shopItems.slice()
-    );
+    this.shopItemsServiceChanged.next(this.shopItems.slice());
   }
   ////////////////////////////////////////////////////////////
   // LOADING STATE
@@ -160,5 +152,5 @@ export class ShopItemsService {
     this.loadingChanged.next(!!this.loading);
   }
   // This way I can indicate background activity of service
-  // in any component (with a spinner or a color change)
+  // in any component (with a spinner or color change)
 }
